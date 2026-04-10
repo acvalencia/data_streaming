@@ -14,24 +14,22 @@ Entraremos también a revisar otras alternativas como Protobuf y Apache Thrift.
 Entendiendo estos conceptos, vamos a revisar la forma como podemos procesar datos en Batch, en Streamin y en micro-batch.
 
 ### Servicios en la nube
-En las sesiones de Computación en la nube, revisaremos dos herramientas ampliamente utilizados hoy en día como lo son Databricks y AWS.
+En las sesiones de Computación en la nube, revisaremos dos herramientas ampliamente utilizados hoy en día como lo son ConfluentCloud y AWS.
 
-En Databricks trabajeremos cluster de Spark en los siguientes lenguajes
-- SQL
-- Python
-- R
-- Scala
+En ConfluentCloud abordaremos temas como
+- Apache Kafka: almacena y distribuye eventos
+- Apache Flink: Procesa los eventos en tiempo real
 
 En AWS vamos a conocer y operar los siguientes servicios
-- IAM
-- VPC
-- EC2
-- Cloud9
-- S3
-- EMR
+- VPC: Red privada virtual
+- EC2: Procesamiento
+- S3: Almacenamiento
+- Cloud9: IDE en la nube
+- Lambda: Procesamiento Serverless
+- Kinesis Data Stream: Streaming en AWS
 
 ## Entregas
-Las entregas del curso (informes, notebooks, etc.) se realizarán por correo electrónico. Los talleres se realizan en equipos de trabajo durante las sesiones marcadas como [TALLER], en cada sesión de taller se definirán las fechas de entrega.
+Las entregas del curso (informes, notebooks, etc.) se realizarán por correo electrónico. Las prácticas se realizan en equipos de trabajo, en cada sesión de práctica se definirán las fechas de entrega.
 - Entrega 1 (30%): Serialización de datos
-- Entrega 2 (30%): Databricks
+- Entrega 2 (30%): Procesamiento de Datos
 - Entrega 3 (40%): AWS

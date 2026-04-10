@@ -1,15 +1,39 @@
-from pyspark import SparkContext
-from pyspark.streaming import StreamingContext
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import explode, split, lower, trim
 
-sc = SparkContext(appName = "Text Cleaning")
-strc = StreamingContext(sc, 10)
+HOST = "3.91.36.108"   # Reemplaza por la IP de Cloud9
+PORT = 8083
 
-text_data = strc.socketTextStream("3.91.36.108", 8083)
+spark = SparkSession.builder \
+    .appName("StructuredStreamingWordCount") \
+    .master("local[*]") \
+    .getOrCreate()
 
-words = text_data.flatMap(lambda line: line.split(" "))
-pairs = words.map(lambda word: (word, 1))
-wordCounts = pairs.reduceByKey(lambda x, y: x + y)
-wordCounts.pprint()
+spark.sparkContext.setLogLevel("WARN")
 
-strc.start()
-strc.awaitTermination()
+lines = spark.readStream \
+    .format("socket") \
+    .option("host", HOST) \
+    .option("port", PORT) \
+    .load()
+
+words = lines.select(
+    explode(
+        split(lines.value, " ")
+    ).alias("word")
+)
+
+clean_words = words.select(
+    trim(lower(words.word)).alias("word")
+).filter("word <> ''")
+
+word_counts = clean_words.groupBy("word").count()
+
+query = word_counts.writeStream \
+    .outputMode("complete") \
+    .format("console") \
+    .option("truncate", "false") \
+    .trigger(processingTime="10 seconds") \
+    .start()
+
+query.awaitTermination()
